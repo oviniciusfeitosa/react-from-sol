@@ -1,5 +1,7 @@
 # React From ABI
 
+Create React UI components from contract ABI.
+
 ## Requirements
 
 - Ganache
