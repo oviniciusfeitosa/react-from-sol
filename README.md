@@ -1,5 +1,14 @@
 # React From ABI
 
+## Requirements
+
+- Ganache
+- Truffle
+- solcjs
+- Node v18.14.2
+
+## How to use
+
 ```sh
 # Start local blockchain network
 npx ganache
