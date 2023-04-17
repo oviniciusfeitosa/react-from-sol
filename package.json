@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node start.js",
-    "build": "sh build.sh"
+    "generate-abi": "sh generate-abi-file.sh"
   },
-  "author": "",
+  "author": "Vinicius Feitosa da Silva <oviniciusfeitosa@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "@truffle/hdwallet-provider": "^2.1.9",
