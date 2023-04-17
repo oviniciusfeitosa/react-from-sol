@@ -4,11 +4,13 @@
   "description": "Create React template from ABI file",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node start.js",
+    "build": "sh build.sh"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@truffle/hdwallet-provider": "^2.1.9",
     "fs": "^0.0.1-security",
     "web3": "^1.9.0"
   }
