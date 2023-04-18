@@ -1,6 +1,6 @@
-# React From ABI
+# React from Solidity
 
-Create React UI components from contract ABI.
+Create React template from Solidity SmartContract
 
 ## Requirements
 
@@ -11,14 +11,13 @@ Create React UI components from contract ABI.
 
 ## How to use
 
+
+- Make sure the smart contract is located inside the `contracts/` directory, for example: `contracts/YourSmartContract.sol`.
+
 ```sh
 # Start local blockchain network
 npx ganache
 
-# Create ABI file
-#yarn build ContractName
-yarn build Storage
-
 # Generate React UI from ABI file
-yarn start address ContractName
+yarn start Storage
 ```
