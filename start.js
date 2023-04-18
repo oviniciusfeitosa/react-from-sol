@@ -42,20 +42,23 @@ const outputName = `${contractName}.tsx`;
 
 
 // caminho absoluto do diretório ./contracts
-const currentPath = __dirname;
-const contractsPath = path.join(currentPath, './contracts')
-const buildPath = path.join(currentPath, './build')
+const currentPath = process.cwd();
+// const buildPath = path.join(currentPath, 'build')
 
+const contractsPath = path.join(currentPath, 'contracts')
+const contractFile = path.join(contractsPath, `${contractName}.sol`)
+const abiFile = path.join(currentPath, `contracts_${contractName}_sol_${contractName}.abi`)
+const abiJSONFile = path.join(currentPath, `${contractName}ABI.json`)
 if (process.argv.includes("--from-contract") || !fs.existsSync(`./${contractName}ABI.json`)) {
   execSync("truffle compile")
-  execSync(`solcjs ${contractsPath}/${contractName}.sol --abi --output-dir ${currentPath} -p`);
+  execSync(`solcjs ${contractFile} --abi --output-dir ${currentPath} -p`);
   execSync(
-    `mv ${currentPath}/contracts_${contractName}_sol_${contractName}.abi ./${contractName}ABI.json`
+    `mv ${abiFile} ${abiJSONFile}`
   );
-  console.info(`[INFO] \`${contractName}ABI.json\` file generated successfully`);
+  console.info(`[INFO] \`${abiJSONFile}\` file generated successfully`);
 }
 
-const contractABI = JSON.parse(fs.readFileSync(`${contractName}ABI.json`, "utf8"));
+const contractABI = JSON.parse(fs.readFileSync(`${abiJSONFile}`, "utf8"));
 
 const inputs = contractABI
   .map((item) => {
