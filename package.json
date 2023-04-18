@@ -1,6 +1,6 @@
 {
   "name": "react-from-abi",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Create React template from ABI file",
   "main": "index.js",
   "scripts": {
@@ -10,8 +10,10 @@
   "author": "Vinicius Feitosa da Silva <oviniciusfeitosa@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@truffle/hdwallet-provider": "^2.1.9",
-    "fs": "^0.0.1-security",
-    "web3": "^1.9.0"
+    "child_process": "^1.0.2",
+    "fs": "^0.0.1-security"
+  },
+  "bin": {
+    "react-from-abi": "./start.js"
   }
 }

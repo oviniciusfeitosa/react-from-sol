@@ -4,10 +4,10 @@ Create React UI components from contract ABI.
 
 ## Requirements
 
-- Ganache
 - Truffle
 - solcjs
 - Node v18.14.2
+- (optional) Ganache
 
 ## How to use
 

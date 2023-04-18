@@ -1,29 +1,53 @@
-const Web3 = require("web3");
 const fs = require("fs");
+const { execSync } = require("child_process");
 
-let outputName = "contractUI.tsx";
+const helpMessage = (errorMessage) => {
+  if (errorMessage) {
+    console.log(`\n[ Error ] ${errorMessage}\n`);
+  }
+  console.log("[ Help ]\n");
+  console.log("Usage: CONTRACT_NAME [OPTIONS]");
+  console.log("Example: MyContract");
+  console.log("\n [Options] \n");
+  console.log("--from-contract              : Generate ABI from contract");
+  console.log("--address CONTRACT_ADDRESS   : Set the contract address");
+  return;
+};
 
 if (process.argv.includes("--help")) {
-  console.log("[ Help ]");
-  console.log("Usage: CONTRACT_ADDRESS [ (optional) OUTPUT_NAME ] ");
-  console.log("Example: 0xAA715F076edc40e772706dcBc60D0847Db82321b");
-  console.log("Example2: 0xAA715F076edc40e772706dcBc60D0847Db82321b MyContractUi");
-  return
+  helpMessage();
+  return;
 }
 
 if (!process.argv[2]) {
-  console.log("Enter the contract address");
+  helpMessage("Enter the contract name");
   return;
 }
-const contractAddress = process.argv[2];
 
-if (process.argv[3]) {
-  outputName = `${process.argv[3]}.tsx`;
+// if (!process.argv[3]) {
+//   helpMessage('Enter the contract address')
+//   return
+// }
+let contractAddress = "0x...";
+for (let i = 2; i < process.argv.length; i++) {
+  if (process.argv[i] === "--address") {
+    contractAddress = process.argv[i + 1];
+    break;
+  }
+}
+const contractName = process.argv[2];
+const outputName = `${contractName}.tsx`;
+
+if (process.argv.includes("--from-contract") || !fs.existsSync(`./${contractName}ABI.json`)) {
+  execSync("truffle compile")
+  execSync(`solcjs ./contracts/${contractName}.sol --abi --output-dir ./build/contracts/abi/ -p `);
+  execSync(
+    `mv ./build/contracts/abi/contracts_${contractName}_sol_${contractName}.abi ./${contractName}ABI.json`
+  );
+  console.info(`[INFO] \`${contractName}ABI.json\` file generated successfully`);
 }
 
-const contractABI = JSON.parse(fs.readFileSync("contractABI.json", "utf8"));
-const web3 = new Web3("http://localhost:8545");
-const contractInstance = new web3.eth.Contract(contractABI, contractAddress);
+const contractABI = JSON.parse(fs.readFileSync(`${contractName}ABI.json`, "utf8"));
 
 const inputs = contractABI
   .map((item) => {
@@ -40,13 +64,17 @@ const inputs = contractABI
 
 const output = `import React, { useState } from 'react';
 
+import contractABI from "./${contractName}ABI.json";
 export default function ContractUI() {
   const [result, setResult] = useState('');
+  const web3 = new Web3("http://localhost:8545");
+  const contractAddress = '${contractAddress}';
+  const contractInstance = new web3.eth.Contract(contractABI, contractAddress);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Recupere os valores dos inputs do formulário
+    // Recover input values from form
     const formData = new FormData(event.target);
     const functionArgs = [];
     for (let input of formData) {
@@ -54,7 +82,6 @@ export default function ContractUI() {
     }
 
     try {
-      // Execute a função do contrato
       const functionResult = await contractInstance.methods.${contractABI[0].name}(functionArgs).call();
       setResult(functionResult);
     } catch (error) {
@@ -67,11 +94,12 @@ export default function ContractUI() {
       <h2>${contractABI[0].name}</h2>
       <form onSubmit={handleSubmit}>
         ${inputs}
-        <button type="submit">Executar</button>
+        <button type="submit">Execute</button>
       </form>
-      <div>Resultado: {result}</div>
+      <div>Result: {result}</div>
     </div>
   );
 }`;
 
 fs.writeFileSync(outputName, output);
+console.info(`[INFO] \`${outputName}\` file generated successfully`);
