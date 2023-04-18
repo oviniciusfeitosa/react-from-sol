@@ -51,7 +51,7 @@ const abiFile = path.join(currentPath, `contracts_${contractName}_sol_${contract
 const abiJSONFile = path.join(currentPath, `${contractName}ABI.json`)
 if (process.argv.includes("--from-contract") || !fs.existsSync(`./${contractName}ABI.json`)) {
   execSync("truffle compile")
-  execSync(`solcjs ${contractFile} --abi -p`);
+  execSync(`solcjs contracts/${contractName}.sol --abi -p`);
   execSync(
     `mv ${abiFile} ${abiJSONFile}`
   );

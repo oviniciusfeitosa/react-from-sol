@@ -1,6 +1,6 @@
 {
   "name": "react-from-sol",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Create React template from Solidity SmartContract.",
   "main": "start.js",
   "scripts": {
