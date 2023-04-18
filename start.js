@@ -40,15 +40,8 @@ for (let i = 2; i < process.argv.length; i++) {
 const contractName = process.argv[2];
 const outputName = `${contractName}.tsx`;
 
-
-// caminho absoluto do diretório ./contracts
-const currentPath = process.cwd();
-// const buildPath = path.join(currentPath, 'build')
-
-const contractsPath = path.join(currentPath, 'contracts')
-const contractFile = path.join(contractsPath, `${contractName}.sol`)
-const abiFile = path.join(currentPath, `contracts_${contractName}_sol_${contractName}.abi`)
-const abiJSONFile = path.join(currentPath, `${contractName}ABI.json`)
+const abiFile = `contracts_${contractName}_sol_${contractName}.abi`;
+const abiJSONFile = `${contractName}ABI.json`;
 if (process.argv.includes("--from-contract") || !fs.existsSync(`./${contractName}ABI.json`)) {
   execSync("truffle compile")
   execSync(`solcjs contracts/${contractName}.sol --abi -p`);
