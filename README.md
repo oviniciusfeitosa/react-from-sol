@@ -7,17 +7,12 @@ Create React template from Solidity SmartContract
 - Truffle
 - solcjs
 - Node v18.14.2
-- (optional) Ganache
 
 ## How to use
 
 
-- Make sure the smart contract is located inside the `contracts/` directory, for example: `contracts/YourSmartContract.sol`.
+- Make sure the smart contract is located inside the `contracts/` directory, for example: `contracts/Storage.sol`.
 
 ```sh
-# Start local blockchain network
-npx ganache
-
-# Generate React UI from ABI file
-yarn start Storage
+npx react-from-sol Storage
 ```
