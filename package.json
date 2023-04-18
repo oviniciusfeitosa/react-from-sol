@@ -1,11 +1,10 @@
 {
-  "name": "react-from-abi",
-  "version": "0.0.1",
-  "description": "Create React template from ABI file",
+  "name": "react-from-sol",
+  "version": "0.0.2",
+  "description": "Create React template from Solidity SmartContract.",
   "main": "index.js",
   "scripts": {
-    "start": "node start.js",
-    "generate-abi": "sh generate-abi-file.sh"
+    "start": "node start.js"
   },
   "author": "Vinicius Feitosa da Silva <oviniciusfeitosa@gmail.com>",
   "license": "MIT",
