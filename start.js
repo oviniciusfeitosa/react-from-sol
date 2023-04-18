@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const path = require('path')
 const fs = require("fs");
 const { execSync } = require("child_process");
 
@@ -39,11 +40,16 @@ for (let i = 2; i < process.argv.length; i++) {
 const contractName = process.argv[2];
 const outputName = `${contractName}.tsx`;
 
+
+// caminho absoluto do diretório ./contracts
+const contractsPath = path.join(__dirname, './contracts')
+const buildPath = path.join(__dirname, './build')
+
 if (process.argv.includes("--from-contract") || !fs.existsSync(`./${contractName}ABI.json`)) {
   execSync("truffle compile")
-  execSync(`solcjs ./contracts/${contractName}.sol --abi --output-dir ./build/contracts/abi/ -p `);
+  execSync(`solcjs ${contractsPath}/${contractName}.sol --abi --output-dir ${buildPath}/contracts/abi/ -p `);
   execSync(
-    `mv ./build/contracts/abi/contracts_${contractName}_sol_${contractName}.abi ./${contractName}ABI.json`
+    `mv ${buildPath}/contracts/abi/contracts_${contractName}_sol_${contractName}.abi ./${contractName}ABI.json`
   );
   console.info(`[INFO] \`${contractName}ABI.json\` file generated successfully`);
 }
