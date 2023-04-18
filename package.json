@@ -1,6 +1,6 @@
 {
   "name": "react-from-sol",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Create React template from Solidity SmartContract.",
   "main": "index.js",
   "scripts": {
@@ -13,6 +13,6 @@
     "fs": "^0.0.1-security"
   },
   "bin": {
-    "react-from-abi": "./start.js"
+    "react-from-sol": "./start.js"
   }
 }
