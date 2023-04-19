@@ -43,7 +43,7 @@ const outputName = `${contractName}.tsx`;
 const abiFile = `contracts_${contractName}_sol_${contractName}.abi`;
 const abiJSONFile = `${contractName}ABI.json`;
 if (process.argv.includes("--from-contract") || !fs.existsSync(`./${contractName}ABI.json`)) {
-  execSync("truffle compile")
+  // execSync("truffle compile")
   execSync(`solcjs contracts/${contractName}.sol --abi -p`);
   execSync(
     `mv ${abiFile} ${abiJSONFile}`
